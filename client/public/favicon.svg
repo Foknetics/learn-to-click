@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="50 30 140 140">
+  <defs>
+    <linearGradient id="topFace" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7a6a6a"/>
+      <stop offset="100%" stop-color="#4a3f3f"/>
+    </linearGradient>
+    <linearGradient id="leftFace" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5f5252"/>
+      <stop offset="100%" stop-color="#3d3333"/>
+    </linearGradient>
+    <linearGradient id="rightFace" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4b4040"/>
+      <stop offset="100%" stop-color="#2e2626"/>
+    </linearGradient>
+  </defs>
+
+  <g stroke="#2a2222" stroke-width="1">
+    <!-- Top face 3x3 grid -->
+    <g fill="url(#topFace)">
+      <polygon points="120,40 140,50 120,60 100,50"/>
+      <polygon points="140,50 160,60 140,70 120,60"/>
+      <polygon points="160,60 180,70 160,80 140,70"/>
+      <polygon points="100,50 120,60 100,70 80,60"/>
+      <polygon points="120,60 140,70 120,80 100,70"/>
+      <polygon points="140,70 160,80 140,90 120,80"/>
+      <polygon points="80,60 100,70 80,80 60,70"/>
+      <polygon points="100,70 120,80 100,90 80,80"/>
+      <polygon points="120,80 140,90 120,100 100,90"/>
+    </g>
+
+    <!-- Cyan target circle on top -->
+    <ellipse cx="120" cy="70" rx="38" ry="19" fill="none" stroke="#00e5ff" stroke-width="5.25" opacity="0.9"/>
+    <ellipse cx="120" cy="70" rx="12.5" ry="6.25" fill="#00e5ff" opacity="0.8"/>
+
+    <!-- Grid lines over circle -->
+    <g fill="none" stroke="#2a2222" stroke-width="1">
+      <polygon points="120,40 140,50 120,60 100,50"/>
+      <polygon points="140,50 160,60 140,70 120,60"/>
+      <polygon points="160,60 180,70 160,80 140,70"/>
+      <polygon points="100,50 120,60 100,70 80,60"/>
+      <polygon points="120,60 140,70 120,80 100,70"/>
+      <polygon points="140,70 160,80 140,90 120,80"/>
+      <polygon points="80,60 100,70 80,80 60,70"/>
+      <polygon points="100,70 120,80 100,90 80,80"/>
+      <polygon points="120,80 140,90 120,100 100,90"/>
+    </g>
+
+    <!-- Left face 3x3 grid -->
+    <g fill="url(#leftFace)">
+      <polygon points="60,70 80,80 80,100 60,90"/>
+      <polygon points="60,90 80,100 80,120 60,110"/>
+      <polygon points="60,110 80,120 80,140 60,130"/>
+      <polygon points="80,80 100,90 100,110 80,100"/>
+      <polygon points="80,100 100,110 100,130 80,120"/>
+      <polygon points="80,120 100,130 100,150 80,140"/>
+      <polygon points="100,90 120,100 120,120 100,110"/>
+      <polygon points="100,110 120,120 120,140 100,130"/>
+      <polygon points="100,130 120,140 120,160 100,150"/>
+    </g>
+
+    <!-- Left face runes (matrix skews to match left face perspective) -->
+    <!-- Star - top-left tile -->
+    <g transform="matrix(1, 0.5, 0, 1, 70, 85)">
+      <polygon points="0,-5 1.2,-1.6 4.8,-1.5 1.9,0.6 2.9,4 0,2 -2.9,4 -1.9,0.6 -4.8,-1.5 -1.2,-1.6" fill="#00e5ff" opacity="0.5"/>
+    </g>
+    <!-- Lightning bolt - bottom-left tile -->
+    <g transform="matrix(1, 0.5, 0, 1, 70, 125)">
+      <path d="M2,-6 L-1,-1 L1,0 L-2,6" fill="none" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+    </g>
+    <!-- Lightning bolt - top-center tile -->
+    <g transform="matrix(1, 0.5, 0, 1, 90, 95)">
+      <path d="M2,-6 L-1,-1 L1,0 L-2,6" fill="none" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+    </g>
+    <!-- Target circle - bottom-center tile -->
+    <g transform="matrix(1, 0.5, 0, 1, 90, 135)">
+      <circle cx="0" cy="0" r="5" fill="none" stroke="#00e5ff" stroke-width="1.2" opacity="0.6"/>
+      <circle cx="0" cy="0" r="1.5" fill="#00e5ff" opacity="0.6"/>
+    </g>
+    <!-- Target circle - top-right tile -->
+    <g transform="matrix(1, 0.5, 0, 1, 110, 105)">
+      <circle cx="0" cy="0" r="5" fill="none" stroke="#00e5ff" stroke-width="1.2" opacity="0.6"/>
+      <circle cx="0" cy="0" r="1.5" fill="#00e5ff" opacity="0.6"/>
+    </g>
+    <!-- Sun - mid-right tile -->
+    <g transform="matrix(1, 0.5, 0, 1, 110, 125)">
+      <circle cx="0" cy="0" r="3" fill="#00e5ff" opacity="0.5"/>
+      <g stroke="#00e5ff" stroke-width="1" opacity="0.5" stroke-linecap="round">
+        <line x1="0" y1="-6" x2="0" y2="-4"/>
+        <line x1="0" y1="4" x2="0" y2="6"/>
+        <line x1="-6" y1="0" x2="-4" y2="0"/>
+        <line x1="4" y1="0" x2="6" y2="0"/>
+        <line x1="-4" y1="-4" x2="-3" y2="-3"/>
+        <line x1="3" y1="3" x2="4" y2="4"/>
+        <line x1="4" y1="-4" x2="3" y2="-3"/>
+        <line x1="-3" y1="3" x2="-4" y2="4"/>
+      </g>
+    </g>
+
+    <!-- Right face 3x3 grid -->
+    <g fill="url(#rightFace)">
+      <polygon points="180,70 160,80 160,100 180,90"/>
+      <polygon points="180,90 160,100 160,120 180,110"/>
+      <polygon points="180,110 160,120 160,140 180,130"/>
+      <polygon points="160,80 140,90 140,110 160,100"/>
+      <polygon points="160,100 140,110 140,130 160,120"/>
+      <polygon points="160,120 140,130 140,150 160,140"/>
+      <polygon points="140,90 120,100 120,120 140,110"/>
+      <polygon points="140,110 120,120 120,140 140,130"/>
+      <polygon points="140,130 120,140 120,160 140,150"/>
+    </g>
+
+    <!-- Right face runes (matrix skews to match right face perspective) -->
+    <!-- Lightning bolt - top-right tile -->
+    <g transform="matrix(1, -0.5, 0, 1, 170, 85)">
+      <path d="M2,-6 L-1,-1 L1,0 L-2,6" fill="none" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+    </g>
+    <!-- Sun - top-center tile -->
+    <g transform="matrix(1, -0.5, 0, 1, 150, 95)">
+      <circle cx="0" cy="0" r="3" fill="#00e5ff" opacity="0.5"/>
+      <g stroke="#00e5ff" stroke-width="1" opacity="0.5" stroke-linecap="round">
+        <line x1="0" y1="-6" x2="0" y2="-4"/>
+        <line x1="0" y1="4" x2="0" y2="6"/>
+        <line x1="-6" y1="0" x2="-4" y2="0"/>
+        <line x1="4" y1="0" x2="6" y2="0"/>
+        <line x1="-4" y1="-4" x2="-3" y2="-3"/>
+        <line x1="3" y1="3" x2="4" y2="4"/>
+        <line x1="4" y1="-4" x2="3" y2="-3"/>
+        <line x1="-3" y1="3" x2="-4" y2="4"/>
+      </g>
+    </g>
+    <!-- Target circle - mid-left tile -->
+    <g transform="matrix(1, -0.5, 0, 1, 130, 125)">
+      <circle cx="0" cy="0" r="5" fill="none" stroke="#00e5ff" stroke-width="1.2" opacity="0.6"/>
+      <circle cx="0" cy="0" r="1.5" fill="#00e5ff" opacity="0.6"/>
+    </g>
+    <!-- Star - bottom-center tile -->
+    <g transform="matrix(1, -0.5, 0, 1, 150, 135)">
+      <polygon points="0,-5 1.2,-1.6 4.8,-1.5 1.9,0.6 2.9,4 0,2 -2.9,4 -1.9,0.6 -4.8,-1.5 -1.2,-1.6" fill="#00e5ff" opacity="0.5"/>
+    </g>
+    <!-- Star - bottom-right tile -->
+    <g transform="matrix(1, -0.5, 0, 1, 170, 125)">
+      <polygon points="0,-5 1.2,-1.6 4.8,-1.5 1.9,0.6 2.9,4 0,2 -2.9,4 -1.9,0.6 -4.8,-1.5 -1.2,-1.6" fill="#00e5ff" opacity="0.5"/>
+    </g>
+  </g>
+</svg>

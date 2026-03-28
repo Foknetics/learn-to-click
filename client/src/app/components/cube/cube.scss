@@ -71,6 +71,10 @@ $text-dim: #7a7868;
     ellipse { stroke: #63e6ff; fill: none; }
     ellipse:last-child { fill: #63e6ff; stroke: none; }
   }
+  .runes {
+    fill: #63e6ff;
+    stroke: #63e6ff;
+  }
 }
 
 // Channeling state — purple glow
@@ -81,6 +85,10 @@ $text-dim: #7a7868;
   .top-circle {
     ellipse { stroke: $purple; fill: none; }
     ellipse:last-child { fill: $purple; stroke: none; }
+  }
+  .runes {
+    fill: $purple;
+    stroke: $purple;
   }
   .cube-svg {
     filter: drop-shadow(0 0 12px rgba($purple, 0.6));

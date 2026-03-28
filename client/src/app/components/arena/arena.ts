@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, computed, signal, effect } from '@angular/core';
+import { Component, Input, Output, EventEmitter, computed, signal } from '@angular/core';
 import { EncounterState, Player, RaidMarker } from '@learn-to-click/shared';
 import { CubeComponent } from '../cube/cube';
 
