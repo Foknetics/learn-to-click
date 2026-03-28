@@ -1,0 +1,386 @@
+@use 'sass:color';
+
+$bg-dark: #0a0a12;
+$bg-panel: #13131f;
+$gold: #c9a84c;
+$gold-dim: #8a6d2b;
+$purple: #8b5cf6;
+$red: #ef4444;
+$green: #22c55e;
+$text: #e2e0d6;
+$text-dim: #7a7868;
+$border: #2a2a3a;
+
+.room-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: $bg-dark;
+  color: $text;
+  position: relative;
+  overflow: hidden;
+}
+
+.room-header {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  background: $bg-panel;
+  border-bottom: 1px solid $border;
+  flex-shrink: 0;
+}
+
+.header-left {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: $gold;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .home-link {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover h1 { opacity: 0.8; }
+  }
+
+  .header-subtitle {
+    font-size: 0.7rem;
+    color: $text-dim;
+    white-space: nowrap;
+  }
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .room-code {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    color: $purple;
+    background: rgba($purple, 0.1);
+    padding: 0.15rem 0.6rem;
+    border-radius: 4px;
+  }
+}
+
+.header-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-copy {
+  background: none;
+  border: 1px solid $border;
+  color: $text-dim;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+
+  &:hover { color: $text; border-color: $gold-dim; }
+}
+
+.btn-leave {
+  background: rgba($red, 0.15);
+  border: 1px solid rgba($red, 0.3);
+  color: #fca5a5;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+
+  &:hover { background: rgba($red, 0.25); }
+}
+
+.room-body {
+  display: flex;
+  flex: 1;
+  gap: 0;
+  min-height: 0;
+}
+
+.sidebar {
+  width: 300px;
+  min-width: 250px;
+  background: $bg-panel;
+  border-right: 1px solid $border;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid $border;
+  border-radius: 8px;
+  padding: 1rem;
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    color: $gold;
+    font-size: 0.95rem;
+    margin: 0 0 0.75rem 0;
+  }
+}
+
+.raiders-toggle {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  &:hover { opacity: 0.8; }
+
+  .toggle-arrow {
+    font-size: 0.65rem;
+    transition: transform 0.2s;
+    display: inline-block;
+
+    &.expanded {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.player-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.player-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+
+  &:hover { background: rgba(255, 255, 255, 0.03); }
+
+  &.is-channeling { background: rgba($purple, 0.1); }
+  &.is-debuffed { background: rgba($red, 0.08); }
+}
+
+.player-name {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.leader-icon { font-size: 0.8rem; }
+
+.status-channeling { color: $purple; font-size: 0.75rem; }
+.status-debuffed { color: $red; font-size: 0.75rem; }
+.status-ready { color: $green; font-size: 0.75rem; }
+
+.input-group {
+  margin-bottom: 0.75rem;
+
+  label {
+    display: block;
+    font-size: 0.8rem;
+    color: $text-dim;
+    margin-bottom: 0.3rem;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 0.5rem 0.7rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid $border;
+    border-radius: 6px;
+    color: $text;
+    font-size: 0.85rem;
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    resize: vertical;
+
+    &:focus { border-color: $gold-dim; }
+  }
+}
+
+.btn-secondary {
+  width: 100%;
+  padding: 0.5rem;
+  background: rgba($purple, 0.15);
+  border: 1px solid rgba($purple, 0.3);
+  color: $purple;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+
+  &:hover { background: rgba($purple, 0.25); }
+}
+
+.input-hint {
+  display: block;
+  font-size: 0.7rem;
+  color: $text-dim;
+  margin-top: 0.25rem;
+}
+
+.marker-config {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+.marker-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.marker-cube-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  color: $gold;
+  font-weight: 700;
+  min-width: 28px;
+}
+
+.marker-select {
+  flex: 1;
+  padding: 0.3rem 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid $border;
+  border-radius: 4px;
+  color: $text;
+  font-size: 0.8rem;
+  outline: none;
+  cursor: pointer;
+
+  &:focus { border-color: $gold-dim; }
+
+  option {
+    background: $bg-panel;
+    color: $text;
+  }
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: linear-gradient(135deg, $gold-dim, $gold);
+  color: #1a1a2e;
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+
+  &:hover { box-shadow: 0 0 15px rgba($gold, 0.3); }
+}
+
+.btn-danger {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: rgba($red, 0.2);
+  border: 1px solid rgba($red, 0.4);
+  color: #fca5a5;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+
+  &:hover { background: rgba($red, 0.3); }
+}
+
+.encounter-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  overflow: auto;
+  min-height: 0;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex: 1;
+  color: $text-dim;
+  font-size: 1.1rem;
+}
+
+// Death overlay
+.death-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.death-content {
+  text-align: center;
+  padding: 3rem;
+
+  .death-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    color: $red;
+    text-shadow: 0 0 30px rgba($red, 0.5);
+    margin: 0 0 1rem 0;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  .death-message {
+    font-size: 1.3rem;
+    color: $text;
+    margin-bottom: 2rem;
+  }
+
+  .death-hint {
+    color: $text-dim;
+    font-size: 0.9rem;
+  }
+
+  .btn-primary {
+    width: auto;
+    padding: 0.8rem 2rem;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+

@@ -1,0 +1,323 @@
+@use 'sass:color';
+
+$bg-dark: #0a0a12;
+$gold: #c9a84c;
+$purple: #8b5cf6;
+$red: #ef4444;
+$green: #22c55e;
+$text: #e2e0d6;
+$text-dim: #7a7868;
+$border: #2a2a3a;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.arena-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+// Boss Status — removed (now inline in arena)
+
+// Pentagon Arena
+.pentagon-arena {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1394 / 784;
+  background: url('/arena-bg.png') center center / cover no-repeat;
+  border-radius: 12px;
+  border: 1px solid $border;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
+}
+
+.beam-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.beam {
+  stroke: $purple;
+  stroke-width: 3;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 6px rgba($purple, 0.8));
+  animation: beamPulse 2s ease-in-out infinite;
+}
+
+// Boss in center-top (matches Magtheridon portrait position in bg image)
+.boss-center {
+  position: absolute;
+  top: 15.82%;
+  left: 50.22%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  z-index: 2;
+  transition: all 0.3s;
+
+  &.caged {
+    .boss-icon {
+      background: radial-gradient(circle, rgba(42, 26, 62, 0.7), rgba(26, 10, 46, 0.7));
+      box-shadow: 0 0 25px rgba($purple, 0.4);
+      border-color: rgba($purple, 0.5);
+    }
+  }
+
+  &.casting {
+    .boss-icon {
+      border-color: rgba($red, 0.7);
+      box-shadow: 0 0 30px rgba($red, 0.5);
+      animation: castPulse 0.5s ease-in-out infinite;
+    }
+  }
+}
+
+.boss-icon {
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26, 42, 30, 0.7), rgba(10, 26, 16, 0.7));
+  border: 2px solid rgba($green, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.boss-cast-bar {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.2rem;
+  width: 160px;
+  height: 16px;
+  background: rgba($red, 0.15);
+  border: 1px solid rgba($red, 0.4);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.boss-cast-fill {
+  height: 100%;
+  background: linear-gradient(90deg, color.adjust($red, $lightness: -10%), $red);
+  transition: width 100ms linear;
+}
+
+.boss-cast-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.05em;
+}
+
+.stunned-bar {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.2rem;
+  width: 180px;
+  height: 20px;
+  background: rgba($purple, 0.15);
+  border: 1px solid rgba($purple, 0.4);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.stunned-fill {
+  height: 100%;
+  background: linear-gradient(90deg, color.adjust($purple, $lightness: -10%), $purple);
+  transition: width 60ms linear;
+}
+
+.stunned-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.05em;
+}
+
+// Blast Nova Timer Overlay
+.blast-timer-overlay {
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 8;
+}
+
+.blast-timer-bar {
+  position: relative;
+  width: 220px;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba($gold, 0.3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.blast-timer-fill {
+  height: 100%;
+  background: linear-gradient(90deg, color.adjust($gold, $lightness: -15%), $gold);
+  transition: width 100ms linear;
+
+  &.urgent {
+    background: linear-gradient(90deg, color.adjust($red, $lightness: -10%), $red);
+  }
+}
+
+.blast-timer-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: $text;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+
+  &.urgent {
+    color: #fca5a5;
+  }
+}
+
+.boss-skull {
+  font-size: 4.2rem;
+  user-select: none;
+}
+
+// Cube positioning
+.cube-position {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+// Animations
+@keyframes castPulse {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 20px rgba($red, 0.3); }
+}
+
+@keyframes urgentPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes beamPulse {
+  0%, 100% { opacity: 0.5; stroke-width: 2; }
+  50% { opacity: 0.9; stroke-width: 4; }
+}
+
+// Debuff icon (top-right of arena)
+.debuff-icon-wrap {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &:hover .debuff-tooltip {
+    display: block;
+  }
+}
+
+.wow-icon {
+  position: relative;
+  width: 44px;
+  height: 44px;
+}
+
+.wow-icon-img {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 36px;
+  height: 36px;
+  background: url('/spell_shadow_teleport.jpg') no-repeat center / contain;
+  border-radius: 3px;
+  z-index: 5;
+}
+
+.wow-icon-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 44px;
+  background: url('/icon_border_default.png') no-repeat center / contain;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.debuff-timer {
+  margin-top: 1px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fca5a5;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.debuff-tooltip {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 6px;
+  width: 220px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, #1a0a2e, #0d0618);
+  border: 1px solid #4a3080;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(120, 80, 200, 0.15);
+  pointer-events: none;
+  z-index: 100;
+
+  .tooltip-header {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #c9a84c;
+    margin-bottom: 4px;
+  }
+
+  .tooltip-detail {
+    font-size: 0.75rem;
+    color: #e2e0d6;
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+
+  .tooltip-duration {
+    font-size: 0.7rem;
+    color: #fca5a5;
+    font-style: italic;
+  }
+}

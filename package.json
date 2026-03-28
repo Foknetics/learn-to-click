@@ -1,0 +1,18 @@
+{
+  "name": "learn-to-click",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "shared",
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "start:server": "npm run build --workspace=shared && npm start --workspace=server",
+    "start:client": "npm start --workspace=client",
+    "build:shared": "npm run build --workspace=shared",
+    "build:server": "npm run build --workspace=server",
+    "build:client": "npm run build --workspace=client",
+    "build": "npm run build:shared && npm run build:server && npm run build:client"
+  }
+}

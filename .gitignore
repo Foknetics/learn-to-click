@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+out-tsc/
+tmp/
+bazel-out/
+
+# Angular
+**/.angular/
+
+# IDE
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.history/
+
+# VS Code (keep certain files)
+**/.vscode/*
+!**/.vscode/settings.json
+!**/.vscode/tasks.json
+!**/.vscode/launch.json
+!**/.vscode/extensions.json
+!**/.vscode/mcp.json
+
+# Testing
+coverage/
+testem.log
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# Sass
+.sass-cache/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Misc
+/connect.lock
+/libpeerconnection.log
+__screenshots__/

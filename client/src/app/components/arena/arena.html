@@ -1,0 +1,86 @@
+<div class="arena-container">
+  <!-- Pentagon Arena -->
+  <div class="pentagon-arena">
+    <!-- Beams from active cubes to center -->
+    <svg class="beam-layer" viewBox="0 0 1394 784">
+      @for (cube of _encounter().cubes; track cube.index) {
+        @if (cube.channelingPlayerId) {
+          <line
+            class="beam"
+            [attr.x1]="beamX(cube.index)"
+            [attr.y1]="beamY(cube.index)"
+            x2="700"
+            y2="124"
+          />
+        }
+      }
+    </svg>
+
+    <!-- Magtheridon in center-top -->
+    <div class="boss-center" [class.caged]="_encounter().bossState === 'caged'" [class.casting]="_encounter().blastWaveCasting">
+      <div class="boss-icon">
+        <span class="boss-skull">💀</span>
+      </div>
+      @if (_encounter().blastWaveCasting) {
+        <div class="boss-cast-bar">
+          <div class="boss-cast-fill" [style.width.%]="blastWaveCastPercent()"></div>
+          <span class="boss-cast-label">BLAST NOVA</span>
+        </div>
+      }
+      @if (_encounter().bossState === 'caged') {
+        <div class="stunned-bar">
+          <div class="stunned-fill" [style.width.%]="cagedRemainingPercent()"></div>
+          <span class="stunned-label">Stunned {{ cagedRemainingText() }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Blast Nova Timer Overlay -->
+    @if (_encounter().status === 'active' && !_encounter().blastWaveCasting && _encounter().blastWaveTimer) {
+      <div class="blast-timer-overlay">
+        <div class="blast-timer-bar">
+          <div class="blast-timer-fill"
+            [style.width.%]="blastWaveTimerPercent()"
+            [class.urgent]="blastWaveTimerRemaining() < 10000"
+          ></div>
+          <span class="blast-timer-text" [class.urgent]="blastWaveTimerRemaining() < 10000">
+            Blast Nova {{ blastWaveTimerText() }}
+          </span>
+        </div>
+      </div>
+    }
+
+    <!-- Cubes -->
+    @for (cube of _encounter().cubes; track cube.index) {
+      <app-cube
+        class="cube-position"
+        [style.top]="cubePositions[cube.index].top"
+        [style.left]="cubePositions[cube.index].left"
+        [cubeState]="cube"
+        [cubeIndex]="cube.index"
+        [marker]="_cubeMarkers()[cube.index]"
+        [isActive]="_encounter().status === 'active'"
+        (clicked)="onCubeClick($event)"
+      />
+    }
+
+    <!-- Projected content (assignment grid overlay) -->
+    <ng-content />
+
+    <!-- Player Debuff Icon -->
+    @if (debuffRemainingSeconds(); as secs) {
+      <div class="debuff-icon-wrap">
+        <div class="wow-icon">
+          <div class="wow-icon-img"></div>
+          <div class="wow-icon-border"></div>
+        </div>
+        <span class="debuff-timer">{{ secs }}s</span>
+        <div class="debuff-tooltip">
+          <div class="tooltip-header">Mind Exhaustion</div>
+          <div class="tooltip-detail">Unable to use a Manticron Cube.</div>
+          <div class="tooltip-duration">{{ secs }} seconds remaining</div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

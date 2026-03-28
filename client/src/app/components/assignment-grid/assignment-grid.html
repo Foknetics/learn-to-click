@@ -1,0 +1,47 @@
+<div class="grid-container">
+  <div class="grid-scroll">
+    <table class="assignment-table">
+      <thead>
+        <tr>
+          <th class="grab-cell" (mousedown)="onDragStart($event)">⠿</th>
+          @for (assignment of _assignments(); track assignment.team) {
+            <th>TEAM #{{ assignment.team }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (cubeIdx of cubeIndices; track cubeIdx) {
+          <tr>
+            <td class="cube-label-cell">
+              @if (markerIcon(cubeIdx)) {
+                <span class="cube-marker" [style.background-position]="markerIcon(cubeIdx)"></span>
+              }
+            </td>
+            @for (assignment of _assignments(); track assignment.team) {
+              <td
+                class="player-cell"
+                [class.channeling]="assignment.players[cubeIdx] && getPlayerStatus(assignment.players[cubeIdx]) === 'channeling'"
+                [class.debuffed]="assignment.players[cubeIdx] && getPlayerStatus(assignment.players[cubeIdx]) === 'debuffed'"
+                [class.ready]="assignment.players[cubeIdx] && getPlayerStatus(assignment.players[cubeIdx]) === 'ready'"
+                [class.offline]="assignment.players[cubeIdx] && getPlayerStatus(assignment.players[cubeIdx]) === 'offline'"
+                [class.is-me]="assignment.players[cubeIdx] && isMyName(assignment.players[cubeIdx])"
+                [class.empty]="!assignment.players[cubeIdx]"
+              >
+                <span class="player-name">{{ assignment.players[cubeIdx] || '-' }}</span>
+                @if (assignment.players[cubeIdx] && getBarInfo(assignment.players[cubeIdx]); as bar) {
+                  <div
+                    class="status-bar"
+                    [class.channel-bar]="bar.type === 'channel'"
+                    [class.debuff-bar]="bar.type === 'debuff'"
+                    [style.width.%]="bar.percent"
+                  ></div>
+                }
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="resize-handle" (mousedown)="onResizeStart($event)">⟋</div>
+</div>

@@ -1,0 +1,119 @@
+@use 'sass:color';
+
+$purple: #8b5cf6;
+$green: #22c55e;
+$text: #e2e0d6;
+$text-dim: #7a7868;
+
+.cube-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  user-select: none;
+}
+
+.cube-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+
+  .marker-left & {
+    flex-direction: row;
+  }
+
+  .marker-right & {
+    flex-direction: row-reverse;
+  }
+
+  .marker-below & {
+    flex-direction: column-reverse;
+  }
+}
+
+.cube-marker {
+  width: 28px;
+  height: 28px;
+  background: url('/markers/raid-markers-sprite.png') no-repeat;
+  background-size: 400% 200%;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+}
+
+// SVG isometric cube
+.cube-svg {
+  width: 80px;
+  height: 80px;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transition: filter 0.3s, transform 0.15s;
+
+  .active & {
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+// Idle state — stone colors + cyan circle
+.idle {
+  .face-top { fill: url(#topFace); }
+  .face-left-svg { fill: url(#leftFace); }
+  .face-right-svg { fill: url(#rightFace); }
+  .top-circle {
+    ellipse { stroke: #63e6ff; fill: none; }
+    ellipse:last-child { fill: #63e6ff; stroke: none; }
+  }
+}
+
+// Channeling state — purple glow
+.channeling {
+  .face-top { fill: url(#topFaceGlow); }
+  .face-left-svg { fill: url(#leftFaceGlow); }
+  .face-right-svg { fill: url(#rightFaceGlow); }
+  .top-circle {
+    ellipse { stroke: $purple; fill: none; }
+    ellipse:last-child { fill: $purple; stroke: none; }
+  }
+  .cube-svg {
+    filter: drop-shadow(0 0 12px rgba($purple, 0.6));
+    animation: cubeGlow 1.5s ease-in-out infinite;
+  }
+}
+
+.cube-anchor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.channeler-name {
+  font-size: 0.7rem;
+  color: $purple;
+  font-weight: 600;
+  text-shadow: 0 0 5px rgba($purple, 0.3);
+  white-space: nowrap;
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+
+
+@keyframes cubeGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba($purple, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba($purple, 0.8));
+  }
+}

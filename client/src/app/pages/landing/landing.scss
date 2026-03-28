@@ -1,0 +1,163 @@
+@use 'sass:color';
+
+$bg-dark: #0a0a12;
+$bg-panel: #13131f;
+$gold: #c9a84c;
+$gold-dim: #8a6d2b;
+$purple: #8b5cf6;
+$red: #ef4444;
+$text: #e2e0d6;
+$text-dim: #7a7868;
+$border: #2a2a3a;
+
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: $bg-dark;
+  color: $text;
+}
+
+.title-section {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.8rem;
+    color: $gold;
+    text-shadow: 0 0 20px rgba($gold, 0.3);
+    margin: 0;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: $text-dim;
+    margin-top: 0.5rem;
+  }
+}
+
+.error-banner {
+  background: rgba($red, 0.15);
+  border: 1px solid rgba($red, 0.4);
+  color: #fca5a5;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  max-width: 500px;
+  text-align: center;
+}
+
+.panels {
+  display: flex;
+  gap: 2rem;
+  align-items: stretch;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.panel {
+  background: $bg-panel;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 2rem;
+  min-width: 280px;
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    color: $gold;
+    font-size: 1.3rem;
+    margin: 0 0 1.5rem 0;
+    text-align: center;
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  color: $text-dim;
+  font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: $border;
+      margin: 0 1rem;
+    }
+  }
+}
+
+.input-group {
+  margin-bottom: 1rem;
+
+  label {
+    display: block;
+    font-size: 0.85rem;
+    color: $text-dim;
+    margin-bottom: 0.4rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid $border;
+    border-radius: 6px;
+    color: $text;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+
+    &:focus {
+      border-color: $gold-dim;
+    }
+
+    &::placeholder {
+      color: rgba($text-dim, 0.6);
+    }
+  }
+
+  .room-code-input {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 1.2rem;
+    text-align: center;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  }
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, $gold-dim, $gold);
+  color: #1a1a2e;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, $gold, color.adjust($gold, $lightness: 10%));
+    box-shadow: 0 0 15px rgba($gold, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

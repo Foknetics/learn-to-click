@@ -1,0 +1,64 @@
+<div class="landing-container">
+  <div class="title-section">
+    <h1>Learn to Click</h1>
+    <p class="subtitle">Magtheridon's Lair Practice Tool</p>
+  </div>
+
+  @if (error) {
+    <div class="error-banner">{{ error }}</div>
+  }
+
+  <div class="panels">
+    <div class="panel create-panel">
+      <h2>Create Room</h2>
+      <div class="input-group">
+        <label for="create-name">Your Character Name</label>
+        <input
+          id="create-name"
+          type="text"
+          [(ngModel)]="createName"
+          placeholder="e.g. Steadycream"
+          maxlength="20"
+          (keydown.enter)="createRoom()"
+        />
+      </div>
+      <button class="btn-primary" (click)="createRoom()" [disabled]="loading">
+        {{ loading ? 'Creating...' : 'Create Room' }}
+      </button>
+    </div>
+
+    <div class="divider">
+      <span>OR</span>
+    </div>
+
+    <div class="panel join-panel">
+      <h2>Join Room</h2>
+      <div class="input-group">
+        <label for="room-code">Room Code</label>
+        <input
+          id="room-code"
+          type="text"
+          [(ngModel)]="joinCode"
+          placeholder="e.g. ABC123"
+          maxlength="6"
+          class="room-code-input"
+        />
+      </div>
+      <div class="input-group">
+        <label for="player-name">Your Character Name</label>
+        <input
+          id="player-name"
+          #playerNameInput
+          type="text"
+          [(ngModel)]="playerName"
+          placeholder="e.g. Biddsters"
+          maxlength="20"
+          (keydown.enter)="joinRoom()"
+        />
+      </div>
+      <button class="btn-primary" (click)="joinRoom()" [disabled]="loading">
+        {{ loading ? 'Joining...' : 'Join Room' }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,177 @@
+<div class="room-container">
+  <!-- Header -->
+  <div class="room-header">
+    <div class="header-left">
+      <a routerLink="/" class="home-link"><h1>Learn to Click</h1></a>
+      <span class="header-subtitle">Magtheridon's Lair Practice Tool</span>
+    </div>
+    <div class="header-center">
+      <span class="room-code">{{ roomId }}</span>
+      <button class="btn-copy" (click)="copyRoomCode()">
+        {{ showCopied ? '✓ Copied' : '🔗 Copy Link' }}
+      </button>
+    </div>
+    <div class="header-right">
+      <button class="btn-leave" (click)="leaveRoom()">Leave</button>
+    </div>
+  </div>
+
+  @if (roomState(); as state) {
+    <!-- Death overlay -->
+    @if (deathMessage(); as msg) {
+      <div class="death-overlay" (click)="isLeader() ? resetEncounter() : null">
+        <div class="death-content">
+          <h2 class="death-title">💀 WIPE 💀</h2>
+          <p class="death-message">{{ msg }}</p>
+          @if (isLeader()) {
+            <button class="btn-primary" (click)="resetEncounter()">Reset Encounter</button>
+          } @else {
+            <p class="death-hint">Waiting for raid leader to reset...</p>
+          }
+        </div>
+      </div>
+    }
+
+    <div class="room-body" [class.encounter-active]="encounterActive() || encounterEnded()">
+      <!-- Sidebar: Players + Config -->
+      <aside class="sidebar">
+        <!-- Player List -->
+        <div class="panel player-panel">
+          <h3 class="raiders-toggle" (click)="raidersExpanded = !raidersExpanded">
+            <span class="toggle-arrow" [class.expanded]="raidersExpanded">▶</span>
+            Raiders ({{ state.players.length }})
+          </h3>
+          @if (raidersExpanded) {
+            <ul class="player-list">
+              @for (player of sortedPlayers(); track player.id) {
+                <li class="player-item">
+                  <span class="player-name">
+                    @if (player.isLeader) { <span class="leader-icon" title="Raid Leader">👑</span> }
+                    {{ player.name }}
+                  </span>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+
+        <!-- Raid Leader Controls -->
+        @if (isLeader()) {
+          <div class="panel config-panel">
+            <h3>Raid Leader Controls</h3>
+
+            <!-- Assignments -->
+            <div class="input-group">
+              <label for="foji-input">Foji WA Assignments</label>
+              <textarea
+                id="foji-input"
+                [(ngModel)]="fojiInput"
+                placeholder="1-Player1,Player2,...,2-Player3,..."
+                rows="3"
+              ></textarea>
+              <button class="btn-secondary" (click)="applyAssignments()">Apply Assignments</button>
+            </div>
+
+            <!-- Blast Wave Config -->
+            <div class="input-group">
+              <label for="bw-initial">Blast Nova Initial Delay (seconds)</label>
+              <input
+                id="bw-initial"
+                type="number"
+                [(ngModel)]="blastWaveInitialDelaySeconds"
+                min="1"
+                max="300"
+                (change)="updateBlastWaveTimer()"
+              />
+            </div>
+
+            <div class="input-group">
+              <label for="bw-timer">Blast Nova Cooldown (seconds)</label>
+              <input
+                id="bw-timer"
+                type="number"
+                [(ngModel)]="blastWaveSeconds"
+                min="1"
+                max="300"
+                (change)="updateBlastWaveTimer()"
+              />
+            </div>
+
+            <div class="input-group">
+              <label for="bw-random">Random Delay Window (seconds)</label>
+              <input
+                id="bw-random"
+                type="number"
+                [(ngModel)]="blastWaveRandomSeconds"
+                min="0"
+                max="30"
+                (change)="updateBlastWaveTimer()"
+              />
+              <span class="input-hint">0–{{ blastWaveRandomSeconds }}s randomness once blast nova is off cooldown</span>
+            </div>
+
+            <!-- Cube Markers -->
+            <div class="input-group">
+              <label>Cube Markers</label>
+              <div class="marker-config">
+                @for (cubeIdx of [0, 1, 2, 3, 4]; track cubeIdx) {
+                  <div class="marker-row">
+                    <span class="marker-cube-label">C{{ cubeIdx + 1 }}</span>
+                    <select
+                      class="marker-select"
+                      [ngModel]="state.config.cubeMarkers[cubeIdx]"
+                      (ngModelChange)="updateCubeMarker(cubeIdx, $event)"
+                    >
+                      <option value="none">None</option>
+                      @for (marker of raidMarkers; track marker) {
+                        <option
+                          [value]="marker"
+                          [disabled]="state.config.cubeMarkers.includes(marker) && state.config.cubeMarkers[cubeIdx] !== marker"
+                        >{{ marker | titlecase }}</option>
+                      }
+                    </select>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- Encounter Controls -->
+            <div class="encounter-controls">
+              @if (!encounterActive()) {
+                <button class="btn-primary" (click)="startEncounter()">Start Encounter</button>
+              }
+              @if (encounterActive() || encounterEnded()) {
+                <button class="btn-danger" (click)="resetEncounter()">Reset Encounter</button>
+              }
+            </div>
+          </div>
+        }
+      </aside>
+
+      <!-- Main Area -->
+      <main class="main-area">
+        <!-- Arena -->
+        <app-arena
+          [encounter]="state.encounter"
+          [players]="state.players"
+          [myPlayer]="myPlayer()"
+          [cubeMarkers]="state.config.cubeMarkers"
+          [blastWaveInterval]="state.config.blastWaveInterval"
+          (cubeClicked)="onCubeClick($event)"
+        >
+          @if (state.assignments.length > 0) {
+            <app-assignment-grid
+              [assignments]="state.assignments"
+              [players]="state.players"
+              [encounter]="state.encounter"
+              [cubeMarkers]="state.config.cubeMarkers"
+              [myPlayerId]="socketService.socketId ?? ''"
+            />
+          }
+        </app-arena>
+      </main>
+    </div>
+  } @else {
+    <div class="loading">Connecting to room...</div>
+  }
+</div>
