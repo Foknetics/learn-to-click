@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { RoomState } from '@learn-to-click/shared';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -41,9 +42,8 @@ export class SocketService {
   connect(): void {
     if (this.socket?.connected) return;
 
-    const serverUrl =
-      ((window as unknown as Record<string, unknown>)['__SERVER_URL__'] as string) ||
-      'http://localhost:3000';
+    const runtimeUrl = (window as unknown as Record<string, unknown>)['__SERVER_URL__'] as string | undefined;
+    const serverUrl = runtimeUrl ?? environment.serverUrl ?? 'http://localhost:3000';
 
     this.socket = io(serverUrl, {
       transports: ['websocket', 'polling'],
