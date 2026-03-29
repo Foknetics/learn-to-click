@@ -36,8 +36,17 @@ export class RoomGateway implements OnGatewayDisconnect {
   handleCreateRoom(
     @ConnectedSocket() client: Socket,
   ): { roomId: string } {
-    // Leave any existing room first
+    // Leave any existing room first (remove socket from previous socket.io room)
+    const prevRoom = this.roomService.findRoomByPlayer(client.id);
+    const prevRoomId = prevRoom?.id;
     this.roomService.leaveRoom(client.id);
+    if (prevRoomId) {
+      client.leave(prevRoomId);
+      const prevState = this.roomService.getRoomState(prevRoomId);
+      if (prevState) {
+        this.server.to(prevRoomId).emit('room-state', prevState);
+      }
+    }
 
     const room = this.roomService.createRoom(
       client.id,
@@ -67,8 +76,15 @@ export class RoomGateway implements OnGatewayDisconnect {
       return { success: false, error: 'Invalid player name' };
     }
 
-    // Leave any existing room first
+    // Leave any existing room first (remove socket from previous socket.io room)
+    const prev = this.roomService.findRoomByPlayer(client.id);
+    const prevId = prev?.id;
     this.roomService.leaveRoom(client.id);
+    if (prevId) {
+      client.leave(prevId);
+      const prevState = this.roomService.getRoomState(prevId);
+      if (prevState) this.server.to(prevId).emit('room-state', prevState);
+    }
 
     const room = this.roomService.getRoom(roomId);
     if (!room) {
